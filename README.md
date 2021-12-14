@@ -106,13 +106,11 @@ Handshake Query provides a modern Handshake native DNSSEC validation package tha
 
 ### PoWDoH
 
-PoWDoH requests the DNSSEC chain from a DoH server and verifies it by fetching the DS record from an SPV node which verifies Proof of Work.
+PoWDoH (PoW over DoH) is a technique for requesting the DNSSEC chain from a DoH server and verifying it with proof of work. This is done by fetching a verified DS record from an SPV node. DNS records & DNSSEC signatures can be transmitted over any channel. DoH transmits the signatures over HTTPS. 
 
-DNS records & DNSSEC signatures can be transmitted over any channel. DoH transmits the signatures over HTTPS. The advantage is better censorship resistance compared to using port 53 since queries hide with other HTTPS traffic. Plain DNS traffic is unreliable due to middlebox inteference and they are easy to block by ISPs.
+There are some advantages to using a DoH server compared to doing recursion starting from the Handshake root zone. First, plain DNS traffic is unreliable on some networks due to middlebox interference. Using DoH, DNS queries can hide with other HTTPS traffic, while port 53 is easy to block and censor by ISPs. Also, it may not be possible to run a full recursive resolver on some mobile devices, especially along with an SPV node. On iOS, network extensions are limited to 15MB of memory. SPV node alone needs 40MB+, so enabling device-wide handshake recursive resolver on iOS is impossible at the moment, but this may change in the future.
 
-Using a forwarding resolver is faster than doing recursion since it benefits from a global cache. Currently, hnsq queries DNS records over DoH and re-uses tcp connections to reduce latency but performance can be improved with CHAIN queries (RFC7901).
-
-PoWDoH may improve security if the DoH server uses cert pinning & also performs DNSSEC validation because an attacker needs to compromise the DoH server (which likely uses a full node) in addition to the SPV node.
+Using a forwarding resolver is also faster than recursion since it benefits from a global cache and uses less resources. Currently, this library queries DNS records over DoH. It re-uses TCP connections to reduce latency, but performance can be improved with CHAIN queries (RFC7901) or by implementing RFC9102 to avoid querying for DNSSEC chain completely.
 
 ### TLS DNSSEC Chain Extension (RFC9102)
 
