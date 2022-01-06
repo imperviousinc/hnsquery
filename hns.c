@@ -485,6 +485,9 @@ hns_ctx *hns_ctx_create() {
     if (!hsk_pool_set_size(ctx->pool, 4))
         goto fail;
 
+    if (!hsk_pool_set_agent(ctx->pool, "beacon"))
+        goto fail;
+
     ctx->pool_state = (hns_pool_state *) malloc(sizeof(hns_pool_state));
     if (!ctx->pool_state)
         goto fail;

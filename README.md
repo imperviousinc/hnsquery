@@ -2,7 +2,8 @@
 
 ⚠️ Usage of this library is not currently recommended in your application as the API will likely change.
 
-Handshake Query is a cross-platform library to trustlessly resolve and verify Handshake names using an SPV node. Supports DNSSEC & DNS-Based Authentication of Named Entities (DANE). It wraps [libhsk](https://github.com/handshake-org/hnsd) with a thread-safe API. It's currently being used by Impervious browser.
+Handshake Query is a cross-platform library to trustlessly resolve and verify Handshake names using an SPV node. Supports DNSSEC & DNS-Based Authentication of Named Entities (DANE). It wraps [libhsk](https://github.com/handshake-org/hnsd) with a thread-safe API. It's currently being used by Beacon browser.
+
 ## Supported Platforms
 
 iOS, Android, macOS, Windows and Linux
@@ -130,8 +131,8 @@ Note: these instructions are not yet complete but you should be able to build it
 
 ```
 $ git clone https://github.com/buffrr/hnsd && cd hnsd
-$ git checkout ios
-$ ./build-ios.sh
+$ git checkout hnsquery && cp /path/to/this/repo/build-ios.sh .
+$ ./autogen.sh && ./build-ios.sh
 $ gomobile bind -target ios/arm64 -o MobileHNS.xcframework github.com/imperviousinc/hnsquery/mobile
 ```
 
